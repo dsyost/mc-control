@@ -1,0 +1,2 @@
+<h1>Minecraft Remote Server</h1>
+This python script interacts with the server.jar file via pipes.  It communicates with the client(s) via tcp sockets.  If using in tandom with a program like hamachi remeber to change the host ip to that services ip.  I also recommend looking into systemctl if running on a linux server.  This is the way I have set it up personally. 
