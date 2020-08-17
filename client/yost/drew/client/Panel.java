@@ -8,13 +8,16 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 public class Panel extends JPanel {
     private JTextArea incoming;
     private JTextField output;
 	private Thread textThread;
+	private JScrollPane scrollbar;
     
     private class UpdateText implements Runnable{
 		JTextArea window;
@@ -33,12 +36,6 @@ public class Panel extends JPanel {
 					e.printStackTrace();
 				}
 				String[] s = text.split("\n");
-				if(s.length > 34) {
-					text = "";
-					for(int i=s.length-34;i<s.length;i++) {
-						text += s[i]+"\n";
-					}
-				}
 				window.setText(text);
 				window.setCaretPosition(window.getDocument().getLength());
 			}
@@ -49,6 +46,8 @@ public class Panel extends JPanel {
     	
         incoming = new JTextArea ("You are connected to " + socket.getIP()+"\n",5, 5);
         output = new JTextField (5);
+        scrollbar = new JScrollPane(incoming);
+        scrollbar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         
         setPreferredSize (new Dimension (1000, 600));
         setLayout (null);
@@ -59,11 +58,11 @@ public class Panel extends JPanel {
         incoming.setForeground(Color.white);
         incoming.setFont(new Font("Consolas", Font.BOLD, 12));
         
-        add (incoming);
         add (output);
+        add (scrollbar);
         
-        incoming.setBounds (0, 0, 1000, 550);
         output.setBounds (0, 550, 1000, 50);
+        scrollbar.setBounds(0,0,1000,550);
         
         incoming.setEditable(false);
         output.addActionListener(new ActionListener() {
